@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Noto Sans Arabic", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-white text-black antialiased overflow-x-hidden selection:bg-black selection:text-white;
+  }
+}
+
+@layer components {
+  .institutional-grid {
+    @apply border-black/10 transition-colors duration-500 hover:bg-gray-50;
+  }
+  
+  .btn-institutional {
+    @apply px-10 py-5 bg-black text-white text-[11px] font-bold uppercase tracking-[0.15em] border border-black hover:bg-white hover:text-black transition-all duration-300;
+  }
+  
+  .btn-institutional-outline {
+    @apply px-10 py-5 bg-white text-black text-[11px] font-bold uppercase tracking-[0.15em] border border-black hover:bg-black hover:text-white transition-all duration-300;
+  }
+
+  .nav-link-institutional {
+    @apply text-[11px] font-bold uppercase tracking-[0.1em] hover:opacity-50 transition-all;
+  }
+}
+
+/* Custom transitions for a premium feel */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
