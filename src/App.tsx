@@ -13,6 +13,17 @@ import { RegulatoryView } from "./components/RegulatoryView";
 import { StrategyViewDetail } from "./components/StrategyViewDetail";
 import { PartnershipsView } from "./components/PartnershipsView";
 import { JoinInquiryView } from "./components/JoinInquiryView";
+import { SEO } from "./components/SEO";
+
+const SEO_BY_VIEW: Record<View, { title?: string; canonical: string }> = {
+  home: { canonical: "/" },
+  structure: { title: "Structure", canonical: "/structure" },
+  regulatory: { title: "Regulatory", canonical: "/regulatory" },
+  strategy: { title: "Strategy", canonical: "/strategy" },
+  partnerships: { title: "Partnerships", canonical: "/partnerships" },
+  "join-operator": { title: "Operator Application", canonical: "/join/operator" },
+  "join-training": { title: "Training Application", canonical: "/join/training" },
+};
 
 export default function App() {
   const [view, setView] = useState<View>("home");
@@ -31,8 +42,11 @@ export default function App() {
     window.scrollTo(0, 0);
   }, [view]);
 
+  const seo = SEO_BY_VIEW[view];
+
   return (
     <div className="min-h-screen bg-white font-sans text-left" dir="ltr">
+      <SEO title={seo.title} canonical={seo.canonical} />
       {/* Navigation */}
       <nav
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
