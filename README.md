@@ -1,12 +1,6 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
-
 # Unified Asset Bureau
 
 React + Vite single-page site for Unified Asset Bureau, with SEO, Open Graph, favicon, and Formspree-powered inquiry forms.
-
-View in AI Studio: https://ai.studio/apps/c3470b54-28a8-4766-8d19-ec186725768e
 
 ## Run Locally
 
@@ -28,15 +22,15 @@ View in AI Studio: https://ai.studio/apps/c3470b54-28a8-4766-8d19-ec186725768e
 
 ## Tech Stack
 
-| Layer    | Technology                                       |
-|----------|--------------------------------------------------|
-| Build    | Vite 6                                           |
-| UI       | React 19 + TypeScript                            |
-| Styling  | Tailwind CSS v4 + custom institutional CSS       |
-| Motion   | `motion` (Framer Motion successor)               |
-| Icons    | `lucide-react`                                   |
-| SEO      | `react-helmet-async`                             |
-| Forms    | `@formspree/react` (`useForm` aliased as `useFormspree`) |
+| Layer   | Technology                                               |
+| ------- | -------------------------------------------------------- |
+| Build   | Vite 6                                                   |
+| UI      | React 19 + TypeScript                                    |
+| Styling | Tailwind CSS v4 + custom institutional CSS               |
+| Motion  | `motion` (Framer Motion successor)                       |
+| Icons   | `lucide-react`                                           |
+| SEO     | `react-helmet-async`                                     |
+| Forms   | `@formspree/react` (`useForm` aliased as `useFormspree`) |
 
 ## SEO + Meta Tags
 
@@ -64,11 +58,11 @@ Favicon `<link>` tags are wired in `index.html`. Drop the asset files in `public
 
 Three forms are wired via `@formspree/react`:
 
-| Form                | View                          | Form ID    |
-|---------------------|-------------------------------|------------|
-| UAB-Partnerships    | `PartnershipsView.tsx`        | `xkokeybq` |
-| UAB-join-operator   | `JoinInquiryView.tsx` (`mode="operator"`) | `xdayjbzq` |
-| UAB-join-training   | `JoinInquiryView.tsx` (`mode="training"`) | `mzdywove` |
+| Form              | View                                      | Form ID    |
+| ----------------- | ----------------------------------------- | ---------- |
+| UAB-Partnerships  | `PartnershipsView.tsx`                    | `xkokeybq` |
+| UAB-join-operator | `JoinInquiryView.tsx` (`mode="operator"`) | `xdayjbzq` |
+| UAB-join-training | `JoinInquiryView.tsx` (`mode="training"`) | `mzdywove` |
 
 IDs are centralized in `src/lib/formspree.ts` and can be overridden via env:
 
@@ -90,10 +84,10 @@ Form submissions appear in the Formspree dashboard at https://formspree.io/forms
 
 ## Scripts
 
-| Script         | What it does                  |
-|----------------|-------------------------------|
-| `npm run dev`  | Vite dev server on port 3000  |
-| `npm run build`| Production build              |
-| `npm run preview` | Preview the production build |
-| `npm run lint` | TypeScript typecheck (`tsc --noEmit`) |
-| `npm run clean`| Remove `dist/`                |
+| Script            | What it does                          |
+| ----------------- | ------------------------------------- |
+| `npm run dev`     | Vite dev server on port 3000          |
+| `npm run build`   | Production build                      |
+| `npm run preview` | Preview the production build          |
+| `npm run lint`    | TypeScript typecheck (`tsc --noEmit`) |
+| `npm run clean`   | Remove `dist/`                        |
