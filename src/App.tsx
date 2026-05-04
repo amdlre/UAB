@@ -6,7 +6,7 @@
 import { Menu, X } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { View } from "./types";
-import { CONTENT, NAV_LINKS } from "./constants";
+import { CONTENT, INTEL_LINKS, NAV_LINKS } from "./constants";
 import { HomeView } from "./components/HomeView";
 import { StructureView } from "./components/StructureView";
 import { RegulatoryView } from "./components/RegulatoryView";
@@ -24,6 +24,10 @@ const SEO_BY_VIEW: Record<View, { title?: string; canonical: string }> = {
   "join-operator": { title: "Operator Application", canonical: "/join/operator" },
   "join-training": { title: "Training Application", canonical: "/join/training" },
 };
+
+const BRAND_NAME = import.meta.env.VITE_BRAND_NAME;
+const LINKEDIN_URL = import.meta.env.VITE_LINKEDIN_URL;
+const X_URL = import.meta.env.VITE_X_URL;
 
 export default function App() {
   const [view, setView] = useState<View>("home");
@@ -54,24 +58,34 @@ export default function App() {
         }`}
       >
         <div className="max-w-[1440px] mx-auto px-8 md:px-16 flex justify-between items-center">
-          <button onClick={() => setView("home")} className="font-black tracking-[-0.05em] text-2xl uppercase mr-auto text-black">
-            {t.brand}
+          <button onClick={() => setView("home")} className="font-black tracking-[-0.05em] text-2xl uppercase mr-auto text-black flex items-center gap-3">
+            {BRAND_NAME || t.brand}
           </button>
-          
+
           <div className="hidden md:flex items-center gap-12">
             {view === "home" && NAV_LINKS.map((link) => (
-              <a 
-                key={link.name} 
-                href={link.href} 
+              <a
+                key={link.name}
+                href={link.isComingSoon ? undefined : link.href}
                 onClick={(e) => {
+                  if (link.isComingSoon) {
+                    e.preventDefault();
+                    return;
+                  }
                   if (link.href === "#partnerships") {
                     e.preventDefault();
                     setView("partnerships");
                   }
                 }}
-                className="nav-link-institutional"
+                aria-disabled={link.isComingSoon || undefined}
+                className={`nav-link-institutional inline-flex items-center gap-2 ${link.isComingSoon ? "opacity-40 cursor-not-allowed" : ""}`}
               >
                 {link.name}
+                {link.isComingSoon && (
+                  <span className="text-[9px] font-black uppercase tracking-[0.2em] bg-black text-white px-2 py-[2px]">
+                    {t.comingSoon}
+                  </span>
+                )}
               </a>
             ))}
             {view !== "home" && (
@@ -94,17 +108,27 @@ export default function App() {
             {view === "home" && NAV_LINKS.map((link) => (
               <a
                 key={link.name}
-                href={link.href}
+                href={link.isComingSoon ? undefined : link.href}
                 onClick={(e) => {
+                  if (link.isComingSoon) {
+                    e.preventDefault();
+                    return;
+                  }
                   if (link.href === "#partnerships") {
                     e.preventDefault();
                     setView("partnerships");
                   }
                   setIsMenuOpen(false);
                 }}
-                className="text-4xl font-black uppercase tracking-tighter text-black"
+                aria-disabled={link.isComingSoon || undefined}
+                className={`text-4xl font-black uppercase tracking-tighter text-black inline-flex items-center gap-3 ${link.isComingSoon ? "opacity-40 cursor-not-allowed" : ""}`}
               >
                 {link.name}
+                {link.isComingSoon && (
+                  <span className="text-[10px] font-black uppercase tracking-[0.2em] bg-black text-white px-2 py-1">
+                    {t.comingSoon}
+                  </span>
+                )}
               </a>
             ))}
             {view !== "home" && (
@@ -132,11 +156,11 @@ export default function App() {
         <div className="max-w-[1440px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-32">
             <div className="md:col-span-6">
-              <button 
+              <button
                 onClick={() => setView("home")}
-                className="font-black text-3xl uppercase tracking-tighter mb-8 text-left text-black"
+                className="font-black text-3xl uppercase tracking-tighter mb-8 text-left text-black flex items-center gap-3"
               >
-                {t.brand}
+                {BRAND_NAME || t.brand}
               </button>
               <p className="text-black/40 font-bold text-[11px] uppercase tracking-widest max-w-sm">
                 {t.footerCaption}
@@ -153,15 +177,28 @@ export default function App() {
             <div className="md:col-span-3">
               <h5 className="font-bold text-[11px] uppercase tracking-[0.3em] mb-8 text-black/30 text-left text-black">{t.intelligenceTag}</h5>
               <div className="space-y-3 text-sm font-bold uppercase text-left text-black">
-                <button onClick={() => setView("structure")} className="block hover:opacity-50 transition-opacity text-left">
-                  {t.intel1}
-                </button>
-                <button onClick={() => setView("regulatory")} className="block hover:opacity-50 transition-opacity text-left">
-                  {t.intel2}
-                </button>
-                <button onClick={() => setView("strategy")} className="block hover:opacity-50 transition-opacity text-left">
-                  {t.intel3}
-                </button>
+                {INTEL_LINKS.map((link) => (
+                  <button
+                    key={link.view}
+                    onClick={() => {
+                      if (!link.isComingSoon) setView(link.view);
+                    }}
+                    disabled={link.isComingSoon}
+                    aria-disabled={link.isComingSoon || undefined}
+                    className={`flex items-center gap-3 transition-opacity text-left ${
+                      link.isComingSoon
+                        ? "opacity-40 cursor-not-allowed"
+                        : "hover:opacity-50"
+                    }`}
+                  >
+                    {link.label}
+                    {link.isComingSoon && (
+                      <span className="text-[9px] font-black uppercase tracking-[0.2em] bg-black text-white px-2 py-[2px]">
+                        {t.comingSoon}
+                      </span>
+                    )}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
@@ -170,8 +207,26 @@ export default function App() {
               {t.copyright}
             </p>
             <div className="flex space-x-12 text-black">
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em]">LinkedIn</span>
-              <span className="text-[11px] font-bold uppercase tracking-[0.2em]">X</span>
+              {LINKEDIN_URL && (
+                <a
+                  href={LINKEDIN_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[11px] font-bold uppercase tracking-[0.2em] hover:opacity-50 transition-opacity"
+                >
+                  LinkedIn
+                </a>
+              )}
+              {X_URL && (
+                <a
+                  href={X_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[11px] font-bold uppercase tracking-[0.2em] hover:opacity-50 transition-opacity"
+                >
+                  X
+                </a>
+              )}
             </div>
           </div>
         </div>

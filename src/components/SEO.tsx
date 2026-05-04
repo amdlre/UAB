@@ -10,7 +10,7 @@ interface SEOProps {
   noIndex?: boolean;
 }
 
-const SITE_NAME = "Unified Asset Bureau";
+const SITE_NAME = import.meta.env.VITE_BRAND_NAME || "Unified Asset Bureau";
 const SITE_URL = "https://unifiedassetbureau.com";
 const DEFAULT_DESCRIPTION =
   "U.S.-based institutional holding company structuring and controlling a multi-sector portfolio in Saudi Arabia.";

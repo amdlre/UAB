@@ -1,12 +1,19 @@
 import React from "react";
 import { Shield, Globe, Activity } from "lucide-react";
+import type { IntelLink, NavLink, StrategyItem, Vertical } from "./types";
 
-export const NAV_LINKS = [
+export const NAV_LINKS: NavLink[] = [
   { name: "Verticals", href: "#portfolio" },
   { name: "About", href: "#about" },
   { name: "Strategy", href: "#strategy" },
   { name: "Partnerships", href: "#partnerships" },
   { name: "Join", href: "#join" },
+];
+
+export const INTEL_LINKS: IntelLink[] = [
+  { label: "Structure Overview", view: "structure" },
+  { label: "Regulatory Audit", view: "regulatory" },
+  { label: "Asset Strategy", view: "strategy" },
 ];
 
 export const CONTENT = {
@@ -112,55 +119,65 @@ export const CONTENT = {
   formExecutionExample: "Example of something you executed",
   formWhyJoin: "Why do you want to join?",
   formWhatToLearn: "What do you want to learn?",
+  comingSoon: "Coming Soon",
 };
 
-export const VERTICALS = [
+export const VERTICALS: Vertical[] = [
   {
     name: "Real Estate",
     description: "Asset acquisition, development, and portfolio structuring across key urban markets.",
     category: "Vertical 01",
+    isComingSoon: false,
   },
   {
     name: "Leasehold",
     description: "Long-term asset utilization models enabling access, control, and scalable real estate operations.",
     category: "Vertical 02",
+    isComingSoon: false,
   },
   {
     name: "Hospitality",
     description: "Operational systems and asset-backed models for short-term and serviced accommodation.",
     category: "Vertical 03",
+    isComingSoon: false,
   },
   {
     name: "Services",
     description: "Integrated support services enabling operational efficiency across managed assets.",
     category: "Vertical 04",
+    isComingSoon: false,
   },
   {
     name: "Technology",
     description: "Digital platforms powering asset management, operations, and financial tracking.",
     category: "Vertical 05",
+    isComingSoon: false,
   },
   {
     name: "Infrastructure",
     description: "Foundational systems supporting asset performance, scalability, and long-term value creation.",
     category: "Vertical 06",
+    isComingSoon: false,
   },
 ];
 
-export const STRATEGY = [
+export const STRATEGY: StrategyItem[] = [
   {
     title: "Control",
     description: "We maintain full operational and structural control across our portfolio to ensure strategic alignment.",
     icon: <Shield className="w-5 h-5" />,
+    isComingSoon: false,
   },
   {
     title: "Integration",
     description: "Connecting real estate, operations, and technology into unified proprietary systems.",
     icon: <Globe className="w-5 h-5" />,
+    isComingSoon: false,
   },
   {
     title: "Asset-Driven Growth",
     description: "Focusing strictly on scalable, asset-backed business models with generational durability.",
     icon: <Activity className="w-5 h-5" />,
+    isComingSoon: false,
   },
 ];

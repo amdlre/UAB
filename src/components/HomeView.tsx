@@ -4,12 +4,15 @@ import { ArrowRight, ChevronRight } from "lucide-react";
 import { CONTENT, STRATEGY, VERTICALS } from "../constants";
 import { View } from "../types";
 
+const BRAND_NAME = import.meta.env.VITE_BRAND_NAME;
+
 interface HomeViewProps {
   setView: (view: View) => void;
 }
 
 export const HomeView = ({ setView }: HomeViewProps) => {
   const t = CONTENT;
+  const heroBrand = BRAND_NAME || t.brand;
   const fadeUp = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
@@ -27,9 +30,9 @@ export const HomeView = ({ setView }: HomeViewProps) => {
               transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
               className="text-[10vw] md:text-[8vw] leading-[0.85] font-black tracking-[-0.06em] text-black uppercase mb-16"
             >
-              Unified <br /> Asset Bureau
+              {heroBrand}
             </motion.h1>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -38,7 +41,7 @@ export const HomeView = ({ setView }: HomeViewProps) => {
                 className="md:col-span-12"
               >
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-                   <div className="md:col-span-7">
+                  <div className="md:col-span-7">
                     <p className="text-2xl md:text-3xl font-medium text-black/80 leading-snug mb-8 tracking-tight">
                       {t.heroSubtitle}
                     </p>
@@ -74,7 +77,7 @@ export const HomeView = ({ setView }: HomeViewProps) => {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                variants={fadeUp}
+                variants={fadeUp as any}
                 className="space-y-12"
               >
                 <p className="text-3xl md:text-5xl font-light leading-[1.1] tracking-tight">
@@ -107,8 +110,14 @@ export const HomeView = ({ setView }: HomeViewProps) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-white p-12 md:p-16 space-y-12"
+                className={`relative bg-white p-12 md:p-16 space-y-12 ${item.isComingSoon ? "opacity-50 pointer-events-none" : ""}`}
+                aria-disabled={item.isComingSoon || undefined}
               >
+                {item.isComingSoon && (
+                  <span className="absolute top-6 right-6 text-[10px] font-black uppercase tracking-[0.2em] bg-black text-white px-3 py-1">
+                    {t.comingSoon}
+                  </span>
+                )}
                 <div className="w-14 h-14 bg-black flex items-center justify-center text-white">
                   {item.icon}
                 </div>
@@ -147,16 +156,26 @@ export const HomeView = ({ setView }: HomeViewProps) => {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.05 }}
-                className="bg-white group p-10 md:p-14 border border-transparent hover:border-black/5 institutional-grid cursor-pointer flex flex-col justify-between min-h-[400px] text-left"
+                className={`bg-white group p-10 md:p-14 border border-transparent institutional-grid flex flex-col justify-between min-h-[400px] text-left ${item.isComingSoon
+                    ? "opacity-60 cursor-not-allowed"
+                    : "hover:border-black/5 cursor-pointer"
+                  }`}
+                aria-disabled={item.isComingSoon || undefined}
               >
                 <div className="flex justify-between items-start mb-24">
                   <span className="text-[10px] font-bold uppercase tracking-[0.2em] border-b border-black pb-1">
                     {item.category}
                   </span>
-                  <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] opacity-30 group-hover:opacity-100 transition-all duration-300">
-                    <span className="hidden sm:inline">{t.explorePlatformBtn}</span>
-                    <ChevronRight className="w-3 h-3" />
-                  </div>
+                  {item.isComingSoon ? (
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] bg-black text-white px-3 py-1">
+                      {t.comingSoon}
+                    </span>
+                  ) : (
+                    <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.2em] opacity-30 group-hover:opacity-100 transition-all duration-300">
+                      <span className="hidden sm:inline">{t.explorePlatformBtn}</span>
+                      <ChevronRight className="w-3 h-3" />
+                    </div>
+                  )}
                 </div>
                 <div>
                   <h3 className="text-3xl font-black uppercase tracking-tighter mb-4">{item.name}</h3>
@@ -190,7 +209,7 @@ export const HomeView = ({ setView }: HomeViewProps) => {
       <section id="join" className="pt-32 pb-12 md:pt-64 md:pb-16 bg-white border-t border-black/5 px-8 md:px-16 text-left">
         <div className="max-w-[1440px] mx-auto">
           <span className="text-[11px] font-black uppercase tracking-[0.4em] mb-8 block text-black">{t.joinTag}</span>
-          
+
           <div className="mb-24 space-y-6">
             <p className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none italic text-black">
               {t.joinIntro}
@@ -211,7 +230,7 @@ export const HomeView = ({ setView }: HomeViewProps) => {
                 </p>
               </div>
               <div className="pt-8">
-                <button 
+                <button
                   onClick={() => setView("join-operator")}
                   className="nav-link-institutional font-black text-sm uppercase tracking-widest inline-flex items-center gap-2 group border-b border-black pb-1"
                 >
@@ -230,7 +249,7 @@ export const HomeView = ({ setView }: HomeViewProps) => {
                 </p>
               </div>
               <div className="pt-8">
-                <button 
+                <button
                   onClick={() => setView("join-training")}
                   className="nav-link-institutional font-black text-sm uppercase tracking-widest inline-flex items-center gap-2 group border-b border-black pb-1"
                 >
